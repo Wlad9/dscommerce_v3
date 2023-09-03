@@ -1,6 +1,5 @@
 package com.desafio5.dscommer_v3.dto;
-
-import devSuperio.dscommerce.entities.Product;
+import com.desafio5.dscommer_v3.entities.Product;
 
 public class ProductDTO {
     private Long id;
