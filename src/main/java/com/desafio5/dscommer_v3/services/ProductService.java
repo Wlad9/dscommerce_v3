@@ -3,6 +3,7 @@ package com.desafio5.dscommer_v3.services;
 import com.desafio5.dscommer_v3.dto.ProductDTO;
 import com.desafio5.dscommer_v3.entities.Product;
 import com.desafio5.dscommer_v3.repositories.ProductRepository;
+import com.desafio5.dscommer_v3.services.exceptions.ResourceNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -16,10 +17,11 @@ import java.util.Optional;
 public class ProductService {
     @Autowired
     private ProductRepository repository;
-
+    @Transactional(readOnly = true)
     public ProductDTO findById(Long id) {
         Optional<Product> result = repository.findById(id);
-        Product product = result.get();
+        //Product product = result.get();
+        Product product = result.orElseThrow(()-> new ResourceNotFoundException("Recurso não encontrado. Verifique o id"));
         ProductDTO productDTO = new ProductDTO(product);
         return productDTO;
     }
