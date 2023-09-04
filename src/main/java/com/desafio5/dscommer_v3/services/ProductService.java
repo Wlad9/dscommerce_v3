@@ -4,6 +4,7 @@ import com.desafio5.dscommer_v3.dto.ProductDTO;
 import com.desafio5.dscommer_v3.entities.Product;
 import com.desafio5.dscommer_v3.repositories.ProductRepository;
 import com.desafio5.dscommer_v3.services.exceptions.ResourceNotFoundException;
+import jakarta.persistence.EntityNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -40,10 +41,14 @@ public class ProductService {
     }
     @Transactional
     public ProductDTO update(Long id, ProductDTO dto){
-        Product entity = repository.getReferenceById(id);
-        copyDtoToEntity(dto, entity);
-        entity = repository.save(entity);
-        return new ProductDTO(entity);
+        try {
+            Product entity = repository.getReferenceById(id);
+            copyDtoToEntity(dto, entity);
+            entity = repository.save(entity);
+            return new ProductDTO(entity);
+        }catch (EntityNotFoundException e){
+            throw new ResourceNotFoundException("Updade não executado. Id não existe.");
+        }
     }
     @Transactional
     public void delete(Long id){
