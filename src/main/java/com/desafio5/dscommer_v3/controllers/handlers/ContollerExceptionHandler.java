@@ -40,7 +40,13 @@ public class ContollerExceptionHandler {
     @ExceptionHandler(MethodArgumentNotValidException.class)
     public ResponseEntity<CustomError> methodArgumentNotValid(MethodArgumentNotValidException e, HttpServletRequest request) {
         HttpStatus status = HttpStatus.UNPROCESSABLE_ENTITY;
-        CustomError err = new CustomError(Instant.now(), status.value(), e.getMessage(), request.getRequestURI());
+        //CustomError err = new CustomError(Instant.now(), status.value(), e.getMessage(), request.getRequestURI());
+//        err.addError("name", "Mensagem teste");
+//        err.addError("price", "Preço inválido");
+        ValidationError err = new ValidationError(Instant.now(), status.value(), "Dados inválidos", request.getRequestURI());
+        for (FieldError f : e.getBindingResult().getFieldErrors()) {
+            err.addError(f.getField(), f.getDefaultMessage());
+        }
         return ResponseEntity.status(status).body(err);
     }
 }
