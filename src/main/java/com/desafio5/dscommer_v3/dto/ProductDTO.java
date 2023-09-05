@@ -9,7 +9,7 @@ public class ProductDTO {
     @Size(min = 3, max = 80, message = "Nome min 3 e max 80 caracteres")
     @NotBlank(message = "Campo obrigatório")
     private String name;
-    @Size(min=3,max = 10, message = "Mínimo 3 e máximo 10 caracteres obrigatórios")
+    @Size(min=3,max = 1000, message = "Mínimo 3 e máximo 10 caracteres obrigatórios")
     @NotBlank(message = "campo requerido")
     private String description;
     @Positive(message = "Valor deve ser positivo")
