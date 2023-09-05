@@ -3,6 +3,7 @@ package com.desafio5.dscommer_v3.services;
 import com.desafio5.dscommer_v3.dto.ProductDTO;
 import com.desafio5.dscommer_v3.entities.Product;
 import com.desafio5.dscommer_v3.repositories.ProductRepository;
+import com.desafio5.dscommer_v3.services.exceptions.DatabaseException;
 import com.desafio5.dscommer_v3.services.exceptions.ResourceNotFoundException;
 import jakarta.persistence.EntityNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -64,7 +65,7 @@ public class ProductService {
         try {
             repository.deleteById(id);
         }catch (DataIntegrityViolationException e){
-           // throw new DatabaseException("falha de integridade referêncial");
+           throw new DatabaseException("falha de integridade referêncial");
         }
     }
 
