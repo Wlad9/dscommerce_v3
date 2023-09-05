@@ -1,10 +1,18 @@
 package com.desafio5.dscommer_v3.dto;
 import com.desafio5.dscommer_v3.entities.Product;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.Positive;
+import jakarta.validation.constraints.Size;
 
 public class ProductDTO {
     private Long id;
+    @Size(min = 3, max = 80, message = "Nome min 3 e max 80 caracteres")
+    @NotBlank(message = "Campo obrigatório")
     private String name;
+    @Size(min=3,max = 10, message = "Mínimo 3 e máximo 10 caracteres obrigatórios")
+    @NotBlank(message = "campo requerido")
     private String description;
+    @Positive(message = "Valor deve ser positivo")
     private Double price;
     private String imgUrl;
 
